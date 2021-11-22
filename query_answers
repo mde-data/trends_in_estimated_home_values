@@ -1,0 +1,39 @@
+/* 
+*==========================================
+* Title:  Project - Trends in Estimated Home Values
+* Author: Mark D. Espinoza 
+* Date:  21 Nov 2021
+* =========================================
+*/
+
+
+# Section 1: Data Exploration
+
+/* This is the exploration of the data */
+/* SELECT count(zip_code) 
+FROM home_value_data
+WHERE zip_code IS DISTINC;  --> This is incorrect way of using the distict function */
+/* Note we need to use the distinct function to remove any duplicates*/ 
+SELECT COUNT(DISTINCT zip_code) 
+FROM home_value_data;
+
+/* now if we want to group them by state I need to use the GROUB BY state statement at the end of the query */
+SELECT state, COUNT(DISTINCT zip_code) 
+FROM home_value_data
+GROUP BY 1
+ORDER BY 2 DESC;
+
+/* what is the range of dates for this dateset? To answer this question I am going to use the min and max functions. */ 
+SELECT min(date) AS date_range
+FROM home_value_data
+UNION 
+SELECT max(date) 
+FROM home_value_data;
+
+/* using this query to get the avg cost of homes accross the country grouped by state */ 
+SELECT state, ROUND (AVG(value), 2)
+FROM home_value_data
+WHERE date = "2018" 
+GROUP BY 1
+ORDER BY 2 DESC; 
+
